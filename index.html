@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WWII Timeline</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f0e8d5;
+    --dark: #1a1208;
+    --sepia: #8b6914;
+    --red: #8b1a1a;
+    --blue: #1a2d4a;
+    --mid: #3d3022;
+    --light-sepia: #d4b896;
+    --paper: #e8dcc8;
+    --europe: #1a2d4a;
+    --pacific: #7a1a1a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--dark);
+    color: var(--cream);
+    font-family: 'Crimson Text', serif;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    padding: 50px 20px 30px;
+    border-bottom: 2px solid var(--sepia);
+  }
+
+  .header-badge {
+    display: inline-block;
+    border: 3px double var(--sepia);
+    padding: 4px 16px;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--sepia);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-weight: 900;
+    color: var(--cream);
+  }
+
+  header h1 span { color: var(--sepia); }
+
+  .header-sub {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    color: var(--light-sepia);
+    margin-top: 10px;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .theatres-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  .theatre {
+    padding: 40px 32px 60px;
+  }
+
+  .theatre-europe {
+    border-right: 2px solid rgba(139,105,20,0.4);
+  }
+
+  .theatre-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 36px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(139,105,20,0.3);
+  }
+
+  .theatre-icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+
+  .europe-icon { background: var(--europe); }
+  .pacific-icon { background: var(--pacific); }
+
+  .theatre-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  .europe-title { color: #7ab0e8; }
+  .pacific-title { color: #e87a7a; }
+
+  .theatre-subtitle {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--sepia);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* ── TIMELINE SPINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, var(--sepia) 5%, var(--sepia) 95%, transparent);
+  }
+
+  /* ── EVENT CARD ── */
+  .event {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .event::before {
+    content: '';
+    position: absolute;
+    left: -24px; top: 20px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  .europe-theatre .event::before {
+    border: 2px solid #5a7eb0;
+    background: var(--europe);
+  }
+
+  .event-inner {
+    background: var(--paper);
+    border: 1px solid rgba(139,105,20,0.4);
+    overflow: hidden;
+  }
+
+  .europe-theatre .event-inner { border-left: 4px solid #5a7eb0; }
+
+  .event-date {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 7px 14px 5px;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: var(--europe);
+  }
+
+  /* Image */
+  .event-image {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .event-body { padding: 12px 14px 14px; }
+
+  .event-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+
+  .event-desc {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.92rem;
+    color: var(--mid);
+    line-height: 1.55;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 24px 20px;
+    border-top: 2px solid rgba(139,105,20,0.3);
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: rgba(139,105,20,0.5);
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">AP World History</div>
+  <h1>WWII <span>Timeline</span></h1>
+  <p class="header-sub">1939 – 1945 &nbsp;·&nbsp; European &amp; Pacific Theatres</p>
+</header>
+
+<main>
+  <div class="theatres-wrapper">
+
+    <!-- ═══ EUROPEAN THEATRE ═══ -->
+    <section class="theatre theatre-europe europe-theatre">
+      <div class="theatre-header">
+        <div class="theatre-icon europe-icon">🌍</div>
+        <div>
+          <div class="theatre-title europe-title">European Theatre</div>
+          <div class="theatre-subtitle">Western &amp; Eastern Fronts</div>
+        </div>
+      </div>
+      <div class="timeline">
+
+        <div class="event">
+          <div class="event-inner">
+            <div class="event-date">Aug 23, 1939</div>
+            <img class="event-image" src="assets/non-aggression-pact.jpg" alt="Non-Aggression Pact">
+            <div class="event-body">
+              <div class="event-title">Non-Aggression Pact (Molotov–Ribbentrop Pact)</div>
+              <div class="event-desc">Germany and the Soviet Union agree not to attack each other and secretly divide Eastern Europe, allowing Hitler to invade Poland.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="event">
+          <div class="event-inner">
+            <div class="event-date">Sept 1, 1939</div>
+            <img class="event-image" src="assets/poland-invaded.jpg" alt="Poland Invaded">
+            <div class="event-body">
+              <div class="event-title">Poland Invaded</div>
+              <div class="event-desc">Germany invades Poland using blitzkrieg tactics, beginning World War II in Europe.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="event">
+          <div class="event-inner">
+            <div class="event-date">May 26 – June 4, 1940</div>
+            <img class="event-image" src="assets/dunkirk.jpg" alt="Dunkirk Evacuation">
+            <div class="event-body">
+              <div class="event-title">Dunkirk Evacuation</div>
+              <div class="event-desc">Allied soldiers trapped in northern France are evacuated by British ships across the English Channel.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ PACIFIC THEATRE (placeholder) ═══ -->
+    <section class="theatre theatre-pacific pacific-theatre">
+      <div class="theatre-header">
+        <div class="theatre-icon pacific-icon">🌏</div>
+        <div>
+          <div class="theatre-title pacific-title">Pacific Theatre</div>
+          <div class="theatre-subtitle">Asia &amp; the Pacific Ocean</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <!-- Events coming in next commit -->
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>AP World History &nbsp;·&nbsp; WWII Illustrated Timeline &nbsp;·&nbsp; 1939–1945</footer>
+
+</body>
+</html>
