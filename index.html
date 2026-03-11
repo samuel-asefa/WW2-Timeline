@@ -10,8 +10,6 @@
     --cream: #f0e8d5;
     --dark: #1a1208;
     --sepia: #8b6914;
-    --red: #8b1a1a;
-    --blue: #1a2d4a;
     --mid: #3d3022;
     --light-sepia: #d4b896;
     --paper: #e8dcc8;
@@ -64,6 +62,64 @@
     margin-top: 10px;
   }
 
+  /* ── TABS ── */
+  .theatre-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-top: 28px;
+  }
+
+  .tab-btn {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 32px;
+    border: 2px solid var(--sepia);
+    background: transparent;
+    color: var(--light-sepia);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .tab-btn:first-child { border-right: none; }
+  .tab-btn:last-child  { border-left: none; }
+
+  .tab-btn.active-europe  { background: var(--europe); color: var(--cream); border-color: #5a7eb0; }
+  .tab-btn.active-pacific { background: var(--pacific); color: var(--cream); border-color: #c05050; }
+  .tab-btn:hover:not(.active-europe):not(.active-pacific) {
+    background: rgba(139,105,20,0.15);
+    color: var(--cream);
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 12px 20px;
+    background: rgba(0,0,0,0.4);
+    border-bottom: 1px solid rgba(139,105,20,0.3);
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--light-sepia);
+  }
+
+  .legend-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
   /* ── MAIN LAYOUT ── */
   .theatres-wrapper {
     display: grid;
@@ -74,11 +130,11 @@
 
   .theatre {
     padding: 40px 32px 60px;
+    transition: opacity 0.3s;
   }
 
-  .theatre-europe {
-    border-right: 2px solid rgba(139,105,20,0.4);
-  }
+  .theatre.dimmed { opacity: 0.2; pointer-events: none; }
+  .theatre-europe { border-right: 2px solid rgba(139,105,20,0.4); }
 
   .theatre-header {
     display: flex;
@@ -99,13 +155,8 @@
   .europe-icon { background: var(--europe); }
   .pacific-icon { background: var(--pacific); }
 
-  .theatre-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-  }
-
-  .europe-title { color: #7ab0e8; }
+  .theatre-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; }
+  .europe-title  { color: #7ab0e8; }
   .pacific-title { color: #e87a7a; }
 
   .theatre-subtitle {
@@ -146,10 +197,8 @@
     z-index: 1;
   }
 
-  .europe-theatre .event::before {
-    border: 2px solid #5a7eb0;
-    background: var(--europe);
-  }
+  .europe-theatre .event::before { border: 2px solid #5a7eb0; background: var(--europe); }
+  .pacific-theatre .event::before { border: 2px solid #c05050; background: var(--pacific); }
 
   .event-inner {
     background: var(--paper);
@@ -158,6 +207,7 @@
   }
 
   .europe-theatre .event-inner { border-left: 4px solid #5a7eb0; }
+  .pacific-theatre .event-inner { border-left: 4px solid #c05050; }
 
   .event-date {
     font-family: 'Special Elite', cursive;
@@ -166,8 +216,10 @@
     padding: 7px 14px 5px;
     text-transform: uppercase;
     color: var(--cream);
-    background: var(--europe);
   }
+
+  .europe-theatre .event-date { background: var(--europe); }
+  .pacific-theatre .event-date { background: var(--pacific); }
 
   /* Image */
   .event-image {
@@ -205,6 +257,11 @@
     color: rgba(139,105,20,0.5);
     text-transform: uppercase;
   }
+
+  @media (max-width: 900px) {
+    .theatres-wrapper { grid-template-columns: 1fr; }
+    .theatre-europe { border-right: none; border-bottom: 2px solid rgba(139,105,20,0.4); }
+  }
 </style>
 </head>
 <body>
@@ -213,13 +270,23 @@
   <div class="header-badge">AP World History</div>
   <h1>WWII <span>Timeline</span></h1>
   <p class="header-sub">1939 – 1945 &nbsp;·&nbsp; European &amp; Pacific Theatres</p>
+  <div class="theatre-tabs">
+    <button class="tab-btn active-europe" onclick="filterTheatre('both', this)">Both Theatres</button>
+    <button class="tab-btn" onclick="filterTheatre('europe', this)">🌍 European</button>
+    <button class="tab-btn" onclick="filterTheatre('pacific', this)">🌏 Pacific</button>
+  </div>
 </header>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#5a7eb0"></div> European Theatre</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#c05050"></div> Pacific Theatre</div>
+</div>
 
 <main>
   <div class="theatres-wrapper">
 
     <!-- ═══ EUROPEAN THEATRE ═══ -->
-    <section class="theatre theatre-europe europe-theatre">
+    <section class="theatre theatre-europe europe-theatre" id="theatre-europe">
       <div class="theatre-header">
         <div class="theatre-icon europe-icon">🌍</div>
         <div>
@@ -229,44 +296,119 @@
       </div>
       <div class="timeline">
 
-        <div class="event">
-          <div class="event-inner">
-            <div class="event-date">Aug 23, 1939</div>
-            <img class="event-image" src="assets/non-aggression-pact.jpg" alt="Non-Aggression Pact">
-            <div class="event-body">
-              <div class="event-title">Non-Aggression Pact (Molotov–Ribbentrop Pact)</div>
-              <div class="event-desc">Germany and the Soviet Union agree not to attack each other and secretly divide Eastern Europe, allowing Hitler to invade Poland.</div>
-            </div>
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Aug 23, 1939</div>
+          <img class="event-image" src="assets/non-aggression-pact.jpg" alt="Non-Aggression Pact">
+          <div class="event-body">
+            <div class="event-title">Non-Aggression Pact (Molotov–Ribbentrop Pact)</div>
+            <div class="event-desc">Germany and the Soviet Union agree not to attack each other and secretly divide Eastern Europe, allowing Hitler to invade Poland.</div>
           </div>
-        </div>
+        </div></div>
 
-        <div class="event">
-          <div class="event-inner">
-            <div class="event-date">Sept 1, 1939</div>
-            <img class="event-image" src="assets/poland-invaded.jpg" alt="Poland Invaded">
-            <div class="event-body">
-              <div class="event-title">Poland Invaded</div>
-              <div class="event-desc">Germany invades Poland using blitzkrieg tactics, beginning World War II in Europe.</div>
-            </div>
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Sept 1, 1939</div>
+          <img class="event-image" src="assets/poland-invaded.jpg" alt="Poland Invaded">
+          <div class="event-body">
+            <div class="event-title">Poland Invaded</div>
+            <div class="event-desc">Germany invades Poland using blitzkrieg tactics, beginning World War II in Europe.</div>
           </div>
-        </div>
+        </div></div>
 
-        <div class="event">
-          <div class="event-inner">
-            <div class="event-date">May 26 – June 4, 1940</div>
-            <img class="event-image" src="assets/dunkirk.jpg" alt="Dunkirk Evacuation">
-            <div class="event-body">
-              <div class="event-title">Dunkirk Evacuation</div>
-              <div class="event-desc">Allied soldiers trapped in northern France are evacuated by British ships across the English Channel.</div>
-            </div>
+        <div class="event"><div class="event-inner">
+          <div class="event-date">May 26 – June 4, 1940</div>
+          <img class="event-image" src="assets/dunkirk.jpg" alt="Dunkirk Evacuation">
+          <div class="event-body">
+            <div class="event-title">Dunkirk Evacuation</div>
+            <div class="event-desc">Allied soldiers trapped in northern France are evacuated by British ships across the English Channel.</div>
           </div>
-        </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">July – Oct 1940</div>
+          <img class="event-image" src="assets/battle-of-britain.jpg" alt="Battle of Britain">
+          <div class="event-body">
+            <div class="event-title">Battle of Britain</div>
+            <div class="event-desc">Germany launches massive air attacks on Britain but fails to gain air superiority.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">June 22, 1941</div>
+          <img class="event-image" src="assets/operation-barbarossa.jpg" alt="Operation Barbarossa">
+          <div class="event-body">
+            <div class="event-title">Soviet Union Invaded (Operation Barbarossa)</div>
+            <div class="event-desc">Germany launches a massive invasion of the Soviet Union, opening the Eastern Front.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Aug 23, 1942</div>
+          <img class="event-image" src="assets/stalingrad-attack.jpg" alt="Stalingrad Attacks">
+          <div class="event-body">
+            <div class="event-title">Stalingrad Attacks Ordered</div>
+            <div class="event-desc">Hitler orders German forces to capture Stalingrad, leading to one of the war's bloodiest battles.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Nov 8, 1942</div>
+          <img class="event-image" src="assets/operation-torch.jpg" alt="Operation Torch">
+          <div class="event-body">
+            <div class="event-title">Allies Land in North Africa (Operation Torch)</div>
+            <div class="event-desc">U.S. and British forces land in North Africa to push Axis forces out of the region.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Feb 2, 1943</div>
+          <img class="event-image" src="assets/stalingrad-surrender.jpg" alt="German Surrender at Stalingrad">
+          <div class="event-body">
+            <div class="event-title">German Surrender in Stalingrad</div>
+            <div class="event-desc">German 6th Army surrenders to the Soviets, marking a major turning point on the Eastern Front.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">June 6, 1944</div>
+          <img class="event-image" src="assets/d-day.jpg" alt="D-Day Normandy">
+          <div class="event-body">
+            <div class="event-title">D-Day (Normandy Invasion)</div>
+            <div class="event-desc">Allied forces land in Normandy, France, opening a Western Front against Nazi Germany.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Dec 16, 1944 – Jan 25, 1945</div>
+          <img class="event-image" src="assets/battle-of-the-bulge.jpg" alt="Battle of the Bulge">
+          <div class="event-body">
+            <div class="event-title">Battle of the Bulge</div>
+            <div class="event-desc">Germany launches its last major offensive in western Europe through Belgium's Ardennes forest.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Apr 30, 1945</div>
+          <img class="event-image" src="assets/hitler-suicide.jpg" alt="Hitler Suicide">
+          <div class="event-body">
+            <div class="event-title">Hitler Commits Suicide</div>
+            <div class="event-desc">Adolf Hitler kills himself in Berlin as Soviet forces close in on the city.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">May 8, 1945</div>
+          <img class="event-image" src="assets/ve-day.jpg" alt="V-E Day">
+          <div class="event-body">
+            <div class="event-title">Germany Surrenders (V-E Day)</div>
+            <div class="event-desc">Germany officially surrenders to the Allied powers, ending WWII in Europe.</div>
+          </div>
+        </div></div>
 
       </div>
     </section>
 
-    <!-- ═══ PACIFIC THEATRE (placeholder) ═══ -->
-    <section class="theatre theatre-pacific pacific-theatre">
+    <!-- ═══ PACIFIC THEATRE ═══ -->
+    <section class="theatre theatre-pacific pacific-theatre" id="theatre-pacific">
       <div class="theatre-header">
         <div class="theatre-icon pacific-icon">🌏</div>
         <div>
@@ -275,7 +417,124 @@
         </div>
       </div>
       <div class="timeline">
-        <!-- Events coming in next commit -->
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Dec 7, 1941</div>
+          <img class="event-image" src="assets/pearl-harbor.jpg" alt="Pearl Harbor">
+          <div class="event-body">
+            <div class="event-title">Pearl Harbor</div>
+            <div class="event-desc">Japan launches a surprise attack on the U.S. naval base in Hawaii, bringing the United States into WWII.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Feb 19, 1942</div>
+          <img class="event-image" src="assets/japanese-internment.jpg" alt="Japanese Internment">
+          <div class="event-body">
+            <div class="event-title">Japanese Internment Camps in America</div>
+            <div class="event-desc">President Roosevelt orders the relocation and internment of Japanese Americans during the war.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">May 4–8, 1942</div>
+          <img class="event-image" src="assets/coral-sea.jpg" alt="Battle of the Coral Sea">
+          <div class="event-body">
+            <div class="event-title">Battle of the Coral Sea</div>
+            <div class="event-desc">First naval battle fought entirely with aircraft carriers; Japan's advance toward Australia is stopped.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">May 6, 1942</div>
+          <img class="event-image" src="assets/philippines-surrender.jpg" alt="Philippines Surrender">
+          <div class="event-body">
+            <div class="event-title">Allies Surrender in the Philippines</div>
+            <div class="event-desc">U.S. and Filipino forces surrender to Japan at Corregidor after months of fighting.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">June 4–7, 1942</div>
+          <img class="event-image" src="assets/midway.jpg" alt="Battle of Midway">
+          <div class="event-body">
+            <div class="event-title">Battle of Midway</div>
+            <div class="event-desc">U.S. Navy defeats Japan and destroys four aircraft carriers, turning the tide in the Pacific.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Feb 7, 1943</div>
+          <img class="event-image" src="assets/guadalcanal.jpg" alt="Guadalcanal">
+          <div class="event-body">
+            <div class="event-title">Japan Abandons Guadalcanal</div>
+            <div class="event-desc">Japan withdraws from Guadalcanal after months of fighting, shifting momentum to the Allies in the Pacific.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">1942–1945</div>
+          <img class="event-image" src="assets/manhattan-project.jpg" alt="Manhattan Project">
+          <div class="event-body">
+            <div class="event-title">Manhattan Project</div>
+            <div class="event-desc">Secret U.S. program to develop the atomic bomb, ultimately changing modern warfare.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Oct 23–26, 1944</div>
+          <img class="event-image" src="assets/leyte-gulf.jpg" alt="Battle of Leyte Gulf">
+          <div class="event-body">
+            <div class="event-title">Battle of Leyte Gulf</div>
+            <div class="event-desc">The largest naval battle in history; Allied forces defeat the Japanese navy in the Philippines.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Mar 26, 1945</div>
+          <img class="event-image" src="assets/iwo-jima.jpg" alt="Iwo Jima">
+          <div class="event-body">
+            <div class="event-title">Iwo Jima Captured</div>
+            <div class="event-desc">U.S. forces capture the island after intense fighting, gaining a strategic base near Japan.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">June 22, 1945</div>
+          <img class="event-image" src="assets/okinawa.jpg" alt="Okinawa">
+          <div class="event-body">
+            <div class="event-title">Okinawa Captured</div>
+            <div class="event-desc">The U.S. secures Okinawa after a brutal battle, providing a staging ground for a potential invasion of Japan.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Aug 6 &amp; 9, 1945</div>
+          <img class="event-image" src="assets/hiroshima-nagasaki.jpg" alt="Atomic Bombings">
+          <div class="event-body">
+            <div class="event-title">Hiroshima / Nagasaki Atomic Bombings</div>
+            <div class="event-desc">The U.S. drops atomic bombs on two Japanese cities, leading to Japan's surrender.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Aug 15, 1945</div>
+          <img class="event-image" src="assets/hirohito-surrender.jpg" alt="Hirohito Surrender Announcement">
+          <div class="event-body">
+            <div class="event-title">Emperor Hirohito Announces Surrender</div>
+            <div class="event-desc">Japan's emperor announces acceptance of Allied terms and the end of the war.</div>
+          </div>
+        </div></div>
+
+        <div class="event"><div class="event-inner">
+          <div class="event-date">Sept 2, 1945</div>
+          <img class="event-image" src="assets/japan-surrender.jpg" alt="Japan Official Surrender">
+          <div class="event-body">
+            <div class="event-title">Japan Signs Official Surrender</div>
+            <div class="event-desc">Japan formally signs surrender documents aboard the USS Missouri, officially ending WWII.</div>
+          </div>
+        </div></div>
+
       </div>
     </section>
 
@@ -284,5 +543,22 @@
 
 <footer>AP World History &nbsp;·&nbsp; WWII Illustrated Timeline &nbsp;·&nbsp; 1939–1945</footer>
 
+<script>
+  function filterTheatre(theatre, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-europe','active-pacific'));
+    const eu = document.getElementById('theatre-europe');
+    const pa = document.getElementById('theatre-pacific');
+    if (theatre === 'both') {
+      eu.classList.remove('dimmed'); pa.classList.remove('dimmed');
+      btn.classList.add('active-europe');
+    } else if (theatre === 'europe') {
+      eu.classList.remove('dimmed'); pa.classList.add('dimmed');
+      btn.classList.add('active-europe');
+    } else {
+      pa.classList.remove('dimmed'); eu.classList.add('dimmed');
+      btn.classList.add('active-pacific');
+    }
+  }
+</script>
 </body>
 </html>
