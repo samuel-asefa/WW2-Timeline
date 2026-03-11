@@ -21,15 +21,19 @@
 
   body {
     background-color: var(--dark);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%231a1208'/%3E%3Crect width='1' height='1' fill='%23241808' opacity='0.5'/%3E%3C/svg%3E");
     color: var(--cream);
     font-family: 'Crimson Text', serif;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
   /* ── HEADER ── */
   header {
+    position: relative;
     text-align: center;
     padding: 50px 20px 30px;
+    background: linear-gradient(180deg, #0a0804 0%, rgba(26,18,8,0) 100%);
     border-bottom: 2px solid var(--sepia);
   }
 
@@ -49,7 +53,10 @@
     font-family: 'Playfair Display', serif;
     font-size: clamp(2.8rem, 7vw, 6rem);
     font-weight: 900;
+    letter-spacing: -0.01em;
+    line-height: 1;
     color: var(--cream);
+    text-shadow: 0 0 40px rgba(139,105,20,0.3);
   }
 
   header h1 span { color: var(--sepia); }
@@ -60,13 +67,13 @@
     letter-spacing: 0.15em;
     color: var(--light-sepia);
     margin-top: 10px;
+    opacity: 0.8;
   }
 
   /* ── TABS ── */
   .theatre-tabs {
     display: flex;
     justify-content: center;
-    gap: 0;
     margin-top: 28px;
   }
 
@@ -83,14 +90,12 @@
     transition: all 0.25s;
   }
 
-  .tab-btn:first-child { border-right: none; }
-  .tab-btn:last-child  { border-left: none; }
+  .tab-btn:nth-child(2) { border-left: none; border-right: none; }
 
   .tab-btn.active-europe  { background: var(--europe); color: var(--cream); border-color: #5a7eb0; }
   .tab-btn.active-pacific { background: var(--pacific); color: var(--cream); border-color: #c05050; }
   .tab-btn:hover:not(.active-europe):not(.active-pacific) {
-    background: rgba(139,105,20,0.15);
-    color: var(--cream);
+    background: rgba(139,105,20,0.15); color: var(--cream);
   }
 
   /* ── LEGEND ── */
@@ -114,11 +119,7 @@
     color: var(--light-sepia);
   }
 
-  .legend-dot {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 
   /* ── MAIN LAYOUT ── */
   .theatres-wrapper {
@@ -128,12 +129,8 @@
     margin: 0 auto;
   }
 
-  .theatre {
-    padding: 40px 32px 60px;
-    transition: opacity 0.3s;
-  }
-
-  .theatre.dimmed { opacity: 0.2; pointer-events: none; }
+  .theatre { padding: 40px 32px 60px; transition: opacity 0.3s; }
+  .theatre.dimmed { opacity: 0.15; pointer-events: none; }
   .theatre-europe { border-right: 2px solid rgba(139,105,20,0.4); }
 
   .theatre-header {
@@ -150,10 +147,11 @@
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.4rem;
+    flex-shrink: 0;
   }
 
-  .europe-icon { background: var(--europe); }
-  .pacific-icon { background: var(--pacific); }
+  .europe-icon { background: var(--europe); box-shadow: 0 0 16px rgba(26,45,74,0.6); }
+  .pacific-icon { background: var(--pacific); box-shadow: 0 0 16px rgba(122,26,26,0.6); }
 
   .theatre-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; }
   .europe-title  { color: #7ab0e8; }
@@ -169,16 +167,12 @@
   }
 
   /* ── TIMELINE SPINE ── */
-  .timeline {
-    position: relative;
-    padding-left: 28px;
-  }
+  .timeline { position: relative; padding-left: 28px; }
 
   .timeline::before {
     content: '';
     position: absolute;
-    left: 7px; top: 0; bottom: 0;
-    width: 2px;
+    left: 7px; top: 0; bottom: 0; width: 2px;
     background: linear-gradient(180deg, transparent, var(--sepia) 5%, var(--sepia) 95%, transparent);
   }
 
@@ -186,7 +180,29 @@
   .event {
     position: relative;
     margin-bottom: 28px;
+    opacity: 0;
+    transform: translateX(-18px);
+    animation: slideIn 0.45s ease forwards;
   }
+
+  .pacific-theatre .event { transform: translateX(18px); }
+
+  @keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
+
+  /* stagger */
+  .event:nth-child(1)  { animation-delay: 0.05s; }
+  .event:nth-child(2)  { animation-delay: 0.1s; }
+  .event:nth-child(3)  { animation-delay: 0.15s; }
+  .event:nth-child(4)  { animation-delay: 0.2s; }
+  .event:nth-child(5)  { animation-delay: 0.25s; }
+  .event:nth-child(6)  { animation-delay: 0.3s; }
+  .event:nth-child(7)  { animation-delay: 0.35s; }
+  .event:nth-child(8)  { animation-delay: 0.4s; }
+  .event:nth-child(9)  { animation-delay: 0.45s; }
+  .event:nth-child(10) { animation-delay: 0.5s; }
+  .event:nth-child(11) { animation-delay: 0.55s; }
+  .event:nth-child(12) { animation-delay: 0.6s; }
+  .event:nth-child(13) { animation-delay: 0.65s; }
 
   .event::before {
     content: '';
@@ -195,19 +211,27 @@
     width: 12px; height: 12px;
     border-radius: 50%;
     z-index: 1;
+    transition: transform 0.2s;
   }
 
   .europe-theatre .event::before { border: 2px solid #5a7eb0; background: var(--europe); }
   .pacific-theatre .event::before { border: 2px solid #c05050; background: var(--pacific); }
+  .event:hover::before { transform: scale(1.4); }
 
   .event-inner {
     background: var(--paper);
     border: 1px solid rgba(139,105,20,0.4);
     overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 
-  .europe-theatre .event-inner { border-left: 4px solid #5a7eb0; }
+  .europe-theatre .event-inner  { border-left: 4px solid #5a7eb0; }
   .pacific-theatre .event-inner { border-left: 4px solid #c05050; }
+
+  .event-inner:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.55);
+  }
 
   .event-date {
     font-family: 'Special Elite', cursive;
@@ -218,16 +242,52 @@
     color: var(--cream);
   }
 
-  .europe-theatre .event-date { background: var(--europe); }
+  .europe-theatre .event-date  { background: var(--europe); }
   .pacific-theatre .event-date { background: var(--pacific); }
 
-  /* Image */
+  /* ── IMAGE ── */
+  .event-image-wrap {
+    width: 100%;
+    height: 140px;
+    overflow: hidden;
+    position: relative;
+    background: #111;
+  }
+
   .event-image {
     width: 100%;
-    height: 130px;
+    height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.35s ease, filter 0.35s;
+    filter: sepia(30%) brightness(0.9);
   }
+
+  .event-inner:hover .event-image {
+    transform: scale(1.04);
+    filter: sepia(0%) brightness(1);
+  }
+
+  /* Fallback shown when image is missing */
+  .event-image-wrap::after {
+    content: attr(data-label);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(212,184,150,0.4);
+    background: rgba(10,8,4,0.85);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .event-image-wrap.no-image::after { opacity: 1; }
+  .event-image-wrap.no-image .event-image { opacity: 0; }
 
   .event-body { padding: 12px 14px 14px; }
 
@@ -237,6 +297,7 @@
     font-weight: 700;
     color: var(--dark);
     margin-bottom: 6px;
+    line-height: 1.25;
   }
 
   .event-desc {
@@ -258,9 +319,16 @@
     text-transform: uppercase;
   }
 
+  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .theatres-wrapper { grid-template-columns: 1fr; }
     .theatre-europe { border-right: none; border-bottom: 2px solid rgba(139,105,20,0.4); }
+    .tab-btn { font-size: 0.75rem; padding: 9px 18px; }
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 2.4rem; }
+    .theatre { padding: 28px 16px 40px; }
   }
 </style>
 </head>
@@ -280,6 +348,7 @@
 <div class="legend">
   <div class="legend-item"><div class="legend-dot" style="background:#5a7eb0"></div> European Theatre</div>
   <div class="legend-item"><div class="legend-dot" style="background:#c05050"></div> Pacific Theatre</div>
+  <div class="legend-item" style="color:rgba(212,184,150,0.5)">Add images to <code style="font-size:0.85em;color:var(--sepia)">assets/</code> folder to display them</div>
 </div>
 
 <main>
@@ -298,7 +367,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Aug 23, 1939</div>
-          <img class="event-image" src="assets/non-aggression-pact.jpg" alt="Non-Aggression Pact">
+          <div class="event-image-wrap" data-label="No image — add assets/non-aggression-pact.jpg">
+            <img class="event-image" src="assets/non-aggression-pact.jpg" alt="Non-Aggression Pact" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Non-Aggression Pact (Molotov–Ribbentrop Pact)</div>
             <div class="event-desc">Germany and the Soviet Union agree not to attack each other and secretly divide Eastern Europe, allowing Hitler to invade Poland.</div>
@@ -307,7 +378,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Sept 1, 1939</div>
-          <img class="event-image" src="assets/poland-invaded.jpg" alt="Poland Invaded">
+          <div class="event-image-wrap" data-label="No image — add assets/poland-invaded.jpg">
+            <img class="event-image" src="assets/poland-invaded.jpg" alt="Poland Invaded" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Poland Invaded</div>
             <div class="event-desc">Germany invades Poland using blitzkrieg tactics, beginning World War II in Europe.</div>
@@ -316,7 +389,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">May 26 – June 4, 1940</div>
-          <img class="event-image" src="assets/dunkirk.jpg" alt="Dunkirk Evacuation">
+          <div class="event-image-wrap" data-label="No image — add assets/dunkirk.jpg">
+            <img class="event-image" src="assets/dunkirk.jpg" alt="Dunkirk Evacuation" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Dunkirk Evacuation</div>
             <div class="event-desc">Allied soldiers trapped in northern France are evacuated by British ships across the English Channel.</div>
@@ -325,7 +400,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">July – Oct 1940</div>
-          <img class="event-image" src="assets/battle-of-britain.jpg" alt="Battle of Britain">
+          <div class="event-image-wrap" data-label="No image — add assets/battle-of-britain.jpg">
+            <img class="event-image" src="assets/battle-of-britain.jpg" alt="Battle of Britain" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Battle of Britain</div>
             <div class="event-desc">Germany launches massive air attacks on Britain but fails to gain air superiority.</div>
@@ -334,7 +411,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">June 22, 1941</div>
-          <img class="event-image" src="assets/operation-barbarossa.jpg" alt="Operation Barbarossa">
+          <div class="event-image-wrap" data-label="No image — add assets/operation-barbarossa.jpg">
+            <img class="event-image" src="assets/operation-barbarossa.jpg" alt="Operation Barbarossa" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Soviet Union Invaded (Operation Barbarossa)</div>
             <div class="event-desc">Germany launches a massive invasion of the Soviet Union, opening the Eastern Front.</div>
@@ -343,7 +422,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Aug 23, 1942</div>
-          <img class="event-image" src="assets/stalingrad-attack.jpg" alt="Stalingrad Attacks">
+          <div class="event-image-wrap" data-label="No image — add assets/stalingrad-attack.jpg">
+            <img class="event-image" src="assets/stalingrad-attack.jpg" alt="Stalingrad Attack" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Stalingrad Attacks Ordered</div>
             <div class="event-desc">Hitler orders German forces to capture Stalingrad, leading to one of the war's bloodiest battles.</div>
@@ -352,7 +433,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Nov 8, 1942</div>
-          <img class="event-image" src="assets/operation-torch.jpg" alt="Operation Torch">
+          <div class="event-image-wrap" data-label="No image — add assets/operation-torch.jpg">
+            <img class="event-image" src="assets/operation-torch.jpg" alt="Operation Torch" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Allies Land in North Africa (Operation Torch)</div>
             <div class="event-desc">U.S. and British forces land in North Africa to push Axis forces out of the region.</div>
@@ -361,7 +444,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Feb 2, 1943</div>
-          <img class="event-image" src="assets/stalingrad-surrender.jpg" alt="German Surrender at Stalingrad">
+          <div class="event-image-wrap" data-label="No image — add assets/stalingrad-surrender.jpg">
+            <img class="event-image" src="assets/stalingrad-surrender.jpg" alt="Stalingrad Surrender" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">German Surrender in Stalingrad</div>
             <div class="event-desc">German 6th Army surrenders to the Soviets, marking a major turning point on the Eastern Front.</div>
@@ -370,7 +455,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">June 6, 1944</div>
-          <img class="event-image" src="assets/d-day.jpg" alt="D-Day Normandy">
+          <div class="event-image-wrap" data-label="No image — add assets/d-day.jpg">
+            <img class="event-image" src="assets/d-day.jpg" alt="D-Day" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">D-Day (Normandy Invasion)</div>
             <div class="event-desc">Allied forces land in Normandy, France, opening a Western Front against Nazi Germany.</div>
@@ -379,7 +466,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Dec 16, 1944 – Jan 25, 1945</div>
-          <img class="event-image" src="assets/battle-of-the-bulge.jpg" alt="Battle of the Bulge">
+          <div class="event-image-wrap" data-label="No image — add assets/battle-of-the-bulge.jpg">
+            <img class="event-image" src="assets/battle-of-the-bulge.jpg" alt="Battle of the Bulge" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Battle of the Bulge</div>
             <div class="event-desc">Germany launches its last major offensive in western Europe through Belgium's Ardennes forest.</div>
@@ -388,7 +477,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Apr 30, 1945</div>
-          <img class="event-image" src="assets/hitler-suicide.jpg" alt="Hitler Suicide">
+          <div class="event-image-wrap" data-label="No image — add assets/hitler-suicide.jpg">
+            <img class="event-image" src="assets/hitler-suicide.jpg" alt="Hitler Suicide" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Hitler Commits Suicide</div>
             <div class="event-desc">Adolf Hitler kills himself in Berlin as Soviet forces close in on the city.</div>
@@ -397,7 +488,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">May 8, 1945</div>
-          <img class="event-image" src="assets/ve-day.jpg" alt="V-E Day">
+          <div class="event-image-wrap" data-label="No image — add assets/ve-day.jpg">
+            <img class="event-image" src="assets/ve-day.jpg" alt="V-E Day" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Germany Surrenders (V-E Day)</div>
             <div class="event-desc">Germany officially surrenders to the Allied powers, ending WWII in Europe.</div>
@@ -420,7 +513,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Dec 7, 1941</div>
-          <img class="event-image" src="assets/pearl-harbor.jpg" alt="Pearl Harbor">
+          <div class="event-image-wrap" data-label="No image — add assets/pearl-harbor.jpg">
+            <img class="event-image" src="assets/pearl-harbor.jpg" alt="Pearl Harbor" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Pearl Harbor</div>
             <div class="event-desc">Japan launches a surprise attack on the U.S. naval base in Hawaii, bringing the United States into WWII.</div>
@@ -429,7 +524,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Feb 19, 1942</div>
-          <img class="event-image" src="assets/japanese-internment.jpg" alt="Japanese Internment">
+          <div class="event-image-wrap" data-label="No image — add assets/japanese-internment.jpg">
+            <img class="event-image" src="assets/japanese-internment.jpg" alt="Japanese Internment" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Japanese Internment Camps in America</div>
             <div class="event-desc">President Roosevelt orders the relocation and internment of Japanese Americans during the war.</div>
@@ -438,7 +535,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">May 4–8, 1942</div>
-          <img class="event-image" src="assets/coral-sea.jpg" alt="Battle of the Coral Sea">
+          <div class="event-image-wrap" data-label="No image — add assets/coral-sea.jpg">
+            <img class="event-image" src="assets/coral-sea.jpg" alt="Battle of the Coral Sea" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Battle of the Coral Sea</div>
             <div class="event-desc">First naval battle fought entirely with aircraft carriers; Japan's advance toward Australia is stopped.</div>
@@ -447,7 +546,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">May 6, 1942</div>
-          <img class="event-image" src="assets/philippines-surrender.jpg" alt="Philippines Surrender">
+          <div class="event-image-wrap" data-label="No image — add assets/philippines-surrender.jpg">
+            <img class="event-image" src="assets/philippines-surrender.jpg" alt="Philippines Surrender" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Allies Surrender in the Philippines</div>
             <div class="event-desc">U.S. and Filipino forces surrender to Japan at Corregidor after months of fighting.</div>
@@ -456,7 +557,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">June 4–7, 1942</div>
-          <img class="event-image" src="assets/midway.jpg" alt="Battle of Midway">
+          <div class="event-image-wrap" data-label="No image — add assets/midway.jpg">
+            <img class="event-image" src="assets/midway.jpg" alt="Battle of Midway" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Battle of Midway</div>
             <div class="event-desc">U.S. Navy defeats Japan and destroys four aircraft carriers, turning the tide in the Pacific.</div>
@@ -465,7 +568,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Feb 7, 1943</div>
-          <img class="event-image" src="assets/guadalcanal.jpg" alt="Guadalcanal">
+          <div class="event-image-wrap" data-label="No image — add assets/guadalcanal.jpg">
+            <img class="event-image" src="assets/guadalcanal.jpg" alt="Guadalcanal" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Japan Abandons Guadalcanal</div>
             <div class="event-desc">Japan withdraws from Guadalcanal after months of fighting, shifting momentum to the Allies in the Pacific.</div>
@@ -474,7 +579,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">1942–1945</div>
-          <img class="event-image" src="assets/manhattan-project.jpg" alt="Manhattan Project">
+          <div class="event-image-wrap" data-label="No image — add assets/manhattan-project.jpg">
+            <img class="event-image" src="assets/manhattan-project.jpg" alt="Manhattan Project" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Manhattan Project</div>
             <div class="event-desc">Secret U.S. program to develop the atomic bomb, ultimately changing modern warfare.</div>
@@ -483,7 +590,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Oct 23–26, 1944</div>
-          <img class="event-image" src="assets/leyte-gulf.jpg" alt="Battle of Leyte Gulf">
+          <div class="event-image-wrap" data-label="No image — add assets/leyte-gulf.jpg">
+            <img class="event-image" src="assets/leyte-gulf.jpg" alt="Battle of Leyte Gulf" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Battle of Leyte Gulf</div>
             <div class="event-desc">The largest naval battle in history; Allied forces defeat the Japanese navy in the Philippines.</div>
@@ -492,7 +601,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Mar 26, 1945</div>
-          <img class="event-image" src="assets/iwo-jima.jpg" alt="Iwo Jima">
+          <div class="event-image-wrap" data-label="No image — add assets/iwo-jima.jpg">
+            <img class="event-image" src="assets/iwo-jima.jpg" alt="Iwo Jima" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Iwo Jima Captured</div>
             <div class="event-desc">U.S. forces capture the island after intense fighting, gaining a strategic base near Japan.</div>
@@ -501,7 +612,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">June 22, 1945</div>
-          <img class="event-image" src="assets/okinawa.jpg" alt="Okinawa">
+          <div class="event-image-wrap" data-label="No image — add assets/okinawa.jpg">
+            <img class="event-image" src="assets/okinawa.jpg" alt="Okinawa" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Okinawa Captured</div>
             <div class="event-desc">The U.S. secures Okinawa after a brutal battle, providing a staging ground for a potential invasion of Japan.</div>
@@ -510,7 +623,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Aug 6 &amp; 9, 1945</div>
-          <img class="event-image" src="assets/hiroshima-nagasaki.jpg" alt="Atomic Bombings">
+          <div class="event-image-wrap" data-label="No image — add assets/hiroshima-nagasaki.jpg">
+            <img class="event-image" src="assets/hiroshima-nagasaki.jpg" alt="Atomic Bombings" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Hiroshima / Nagasaki Atomic Bombings</div>
             <div class="event-desc">The U.S. drops atomic bombs on two Japanese cities, leading to Japan's surrender.</div>
@@ -519,7 +634,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Aug 15, 1945</div>
-          <img class="event-image" src="assets/hirohito-surrender.jpg" alt="Hirohito Surrender Announcement">
+          <div class="event-image-wrap" data-label="No image — add assets/hirohito-surrender.jpg">
+            <img class="event-image" src="assets/hirohito-surrender.jpg" alt="Hirohito Announcement" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Emperor Hirohito Announces Surrender</div>
             <div class="event-desc">Japan's emperor announces acceptance of Allied terms and the end of the war.</div>
@@ -528,7 +645,9 @@
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Sept 2, 1945</div>
-          <img class="event-image" src="assets/japan-surrender.jpg" alt="Japan Official Surrender">
+          <div class="event-image-wrap" data-label="No image — add assets/japan-surrender.jpg">
+            <img class="event-image" src="assets/japan-surrender.jpg" alt="Japan Official Surrender" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Japan Signs Official Surrender</div>
             <div class="event-desc">Japan formally signs surrender documents aboard the USS Missouri, officially ending WWII.</div>
@@ -560,5 +679,6 @@
     }
   }
 </script>
+
 </body>
 </html>
