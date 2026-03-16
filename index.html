@@ -307,6 +307,74 @@
     line-height: 1.55;
   }
 
+  /* ── IMAGE MODAL ── */
+  .img-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.88);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    cursor: zoom-out;
+    backdrop-filter: blur(4px);
+  }
+
+  .img-modal-overlay.open { display: flex; }
+
+  .img-modal-box {
+    position: relative;
+    max-width: min(90vw, 960px);
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: default;
+  }
+
+  .img-modal-img {
+    max-width: 100%;
+    max-height: calc(90vh - 56px);
+    object-fit: contain;
+    display: block;
+    border: 2px solid var(--sepia);
+    box-shadow: 0 0 60px rgba(0,0,0,0.8);
+  }
+
+  .img-modal-caption {
+    margin-top: 12px;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--light-sepia);
+    text-align: center;
+  }
+
+  .img-modal-close {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 32px;
+    height: 32px;
+    background: var(--sepia);
+    border: none;
+    border-radius: 50%;
+    color: var(--dark);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .img-modal-close:hover { background: var(--cream); }
+
+  .event-image-wrap:not(.no-image) { cursor: zoom-in; }
+
   /* ── FOOTER ── */
   footer {
     text-align: center;
@@ -348,7 +416,6 @@
 <div class="legend">
   <div class="legend-item"><div class="legend-dot" style="background:#5a7eb0"></div> European Theatre</div>
   <div class="legend-item"><div class="legend-dot" style="background:#c05050"></div> Pacific Theatre</div>
-  <div class="legend-item" style="color:rgba(212,184,150,0.5)">Add images to <code style="font-size:0.85em;color:var(--sepia)">assets/</code> folder to display them</div>
 </div>
 
 <main>
@@ -661,7 +728,40 @@
 
 <footer>AP World History &nbsp;·&nbsp; WWII Illustrated Timeline &nbsp;·&nbsp; 1939–1945</footer>
 
+<!-- Image Modal -->
+<div class="img-modal-overlay" id="imgModal">
+  <div class="img-modal-box">
+    <button class="img-modal-close" id="imgModalClose" aria-label="Close">&#x2715;</button>
+    <img class="img-modal-img" id="imgModalSrc" src="" alt="">
+    <div class="img-modal-caption" id="imgModalCaption"></div>
+  </div>
+</div>
+
 <script>
+  document.querySelectorAll('.event-image-wrap').forEach(wrap => {
+    wrap.addEventListener('click', function() {
+      if (this.classList.contains('no-image')) return;
+      const img   = this.querySelector('.event-image');
+      const title = this.closest('.event-inner').querySelector('.event-title');
+      const date  = this.closest('.event-inner').querySelector('.event-date');
+      document.getElementById('imgModalSrc').src = img.src;
+      document.getElementById('imgModalSrc').alt = img.alt;
+      document.getElementById('imgModalCaption').textContent =
+        (date ? date.textContent + '  \u00B7  ' : '') + (title ? title.textContent : img.alt);
+      document.getElementById('imgModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeModal() {
+    document.getElementById('imgModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('imgModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+  document.getElementById('imgModalClose').addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
   function filterTheatre(theatre, btn) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-europe','active-pacific'));
     const eu = document.getElementById('theatre-europe');
