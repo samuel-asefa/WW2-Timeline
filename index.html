@@ -189,7 +189,6 @@
 
   @keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
 
-  /* stagger */
   .event:nth-child(1)  { animation-delay: 0.05s; }
   .event:nth-child(2)  { animation-delay: 0.1s; }
   .event:nth-child(3)  { animation-delay: 0.15s; }
@@ -268,7 +267,6 @@
     filter: sepia(0%) brightness(1);
   }
 
-  /* Fallback shown when image is missing */
   .event-image-wrap::after {
     content: attr(data-label);
     position: absolute;
@@ -288,6 +286,7 @@
 
   .event-image-wrap.no-image::after { opacity: 1; }
   .event-image-wrap.no-image .event-image { opacity: 0; }
+  .event-image-wrap:not(.no-image) { cursor: zoom-in; }
 
   .event-body { padding: 12px 14px 14px; }
 
@@ -302,9 +301,9 @@
 
   .event-desc {
     font-family: 'Crimson Text', serif;
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     color: var(--mid);
-    line-height: 1.55;
+    line-height: 1.6;
   }
 
   /* ── IMAGE MODAL ── */
@@ -373,8 +372,6 @@
 
   .img-modal-close:hover { background: var(--cream); }
 
-  .event-image-wrap:not(.no-image) { cursor: zoom-in; }
-
   /* ── FOOTER ── */
   footer {
     text-align: center;
@@ -435,10 +432,11 @@
         <div class="event"><div class="event-inner">
           <div class="event-date">Aug 23, 1939</div>
           <div class="event-image-wrap" data-label="No image — add assets/non-aggression-pact.jpg">
-            <img class="event-image" src="assets/non-aggression-pact.jpg" alt="Non-Aggression Pact" style="object-position: center 30%" onerror="this.parentElement.classList.add('no-image')">          </div>
+            <img class="event-image" src="assets/non-aggression-pact.jpg" alt="Non-Aggression Pact" style="object-position: center 30%" onerror="this.parentElement.classList.add('no-image')">
+          </div>
           <div class="event-body">
             <div class="event-title">Non-Aggression Pact (Molotov–Ribbentrop Pact)</div>
-            <div class="event-desc">Germany and the Soviet Union agree not to attack each other and secretly divide Eastern Europe, allowing Hitler to invade Poland.</div>
+            <div class="event-desc">Germany and the Soviet Union made a deal agreeing not to go to war with each other. They also secretly split up Eastern Europe between themselves. This basically gave Hitler the green light to invade Poland without having to worry about the Soviets getting involved.</div>
           </div>
         </div></div>
 
@@ -449,7 +447,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Poland Invaded</div>
-            <div class="event-desc">Germany invades Poland using blitzkrieg tactics, beginning World War II in Europe.</div>
+            <div class="event-desc">Germany invaded Poland using a strategy called blitzkrieg, which was a fast and aggressive combination of air attacks, tanks, and ground troops all hitting at once. Britain and France had promised to protect Poland, so they declared war on Germany two days later. This is considered the official start of World War II in Europe.</div>
           </div>
         </div></div>
 
@@ -460,7 +458,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Dunkirk Evacuation</div>
-            <div class="event-desc">Allied soldiers trapped in northern France are evacuated by British ships across the English Channel.</div>
+            <div class="event-desc">German forces pushed the Allied army all the way to the beaches of northern France, leaving them completely trapped. Britain put together a huge evacuation using military ships and even regular civilian boats to cross the English Channel and rescue over 330,000 soldiers. It was a close call, but saving those troops kept the Allies in the fight.</div>
           </div>
         </div></div>
 
@@ -471,7 +469,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Battle of Britain</div>
-            <div class="event-desc">Germany launches massive air attacks on Britain but fails to gain air superiority.</div>
+            <div class="event-desc">Germany spent months bombing British cities, airfields, and factories trying to break Britain's will to fight and destroy their air force. British pilots fought back hard and Germany was never able to take control of the skies. Because of this, Hitler eventually gave up on the idea of invading Britain altogether.</div>
           </div>
         </div></div>
 
@@ -482,7 +480,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Soviet Union Invaded (Operation Barbarossa)</div>
-            <div class="event-desc">Germany launches a massive invasion of the Soviet Union, opening the Eastern Front.</div>
+            <div class="event-desc">Hitler went back on the deal he made with the Soviets and launched a massive surprise invasion of the Soviet Union with millions of troops. It was the largest military invasion in history. Taking on the USSR opened up a whole new front in the east, which ended up spreading Germany way too thin and was one of Hitler's biggest blunders of the war.</div>
           </div>
         </div></div>
 
@@ -493,7 +491,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Stalingrad Attacks Ordered</div>
-            <div class="event-desc">Hitler orders German forces to capture Stalingrad, leading to one of the war's bloodiest battles.</div>
+            <div class="event-desc">Hitler ordered German forces to take the city of Stalingrad, which was a major industrial hub on the Volga River. Instead of a quick victory, the battle turned into months of brutal house-to-house combat as Soviet troops refused to retreat. It dragged on for nearly six months and caused enormous casualties on both sides.</div>
           </div>
         </div></div>
 
@@ -504,7 +502,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Allies Land in North Africa (Operation Torch)</div>
-            <div class="event-desc">U.S. and British forces land in North Africa to push Axis forces out of the region.</div>
+            <div class="event-desc">U.S. and British troops joined up and invaded North Africa, landing in Morocco and Algeria to kick Axis forces out of the region. This was actually the first time American soldiers fought in the European Theatre. Controlling North Africa also gave the Allies a better position to attack southern Europe next.</div>
           </div>
         </div></div>
 
@@ -515,7 +513,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">German Surrender in Stalingrad</div>
-            <div class="event-desc">German 6th Army surrenders to the Soviets, marking a major turning point on the Eastern Front.</div>
+            <div class="event-desc">After being completely surrounded by Soviet troops for months with no food or supplies, the German 6th Army finally gave up and surrendered at Stalingrad. Around 300,000 German soldiers were killed or captured in the battle. This was a huge turning point because it showed that Germany could be beaten, and from here on Germany was mostly on the defensive.</div>
           </div>
         </div></div>
 
@@ -526,7 +524,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">D-Day (Normandy Invasion)</div>
-            <div class="event-desc">Allied forces land in Normandy, France, opening a Western Front against Nazi Germany.</div>
+            <div class="event-desc">The Allies launched the biggest seaborne invasion ever, sending thousands of troops onto five beaches in Normandy, France all at the same time. Soldiers landed by boat and parachute while German forces fired down on them from above, making it an incredibly dangerous operation. The invasion worked and opened up a whole new front in the west, pushing Germany into a two-sided war.</div>
           </div>
         </div></div>
 
@@ -537,7 +535,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Battle of the Bulge</div>
-            <div class="event-desc">Germany launches its last major offensive in western Europe through Belgium's Ardennes forest.</div>
+            <div class="event-desc">Germany made one last big push on the Western Front by sending a surprise attack through the forests of Belgium, which pushed deep into Allied territory and created a huge bulge in the front lines. Allied forces were caught off guard but eventually held their ground and pushed Germany back after weeks of brutal winter combat. It turned out to be Germany's final major offensive of the war.</div>
           </div>
         </div></div>
 
@@ -548,7 +546,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Hitler Commits Suicide</div>
-            <div class="event-desc">Adolf Hitler kills himself in Berlin as Soviet forces close in on the city.</div>
+            <div class="event-desc">As Soviet troops closed in on Berlin and it became clear Germany had lost the war, Hitler chose to kill himself in his underground bunker rather than be captured. With him gone, what was left of the Nazi leadership fell apart quickly. Germany officially surrendered just eight days after his death.</div>
           </div>
         </div></div>
 
@@ -559,7 +557,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Germany Surrenders (V-E Day)</div>
-            <div class="event-desc">Germany officially surrenders to the Allied powers, ending WWII in Europe.</div>
+            <div class="event-desc">Germany officially surrendered to the Allies, ending the war in Europe for good. The day was called V-E Day, which stands for Victory in Europe, and people celebrated in the streets all across Britain, America, and the Soviet Union. It was the end of almost six years of war on the European continent.</div>
           </div>
         </div></div>
 
@@ -584,7 +582,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Pearl Harbor</div>
-            <div class="event-desc">Japan launches a surprise attack on the U.S. naval base in Hawaii, bringing the United States into WWII.</div>
+            <div class="event-desc">Japan carried out a surprise attack on the U.S. naval base at Pearl Harbor, Hawaii, destroying a large part of the American Pacific Fleet in just a couple of hours. Over 2,400 Americans were killed and around 1,200 more were wounded. The U.S. declared war on Japan the very next day and officially entered World War II.</div>
           </div>
         </div></div>
 
@@ -595,7 +593,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Japanese Internment Camps in America</div>
-            <div class="event-desc">President Roosevelt orders the relocation and internment of Japanese Americans during the war.</div>
+            <div class="event-desc">After Pearl Harbor, President Roosevelt signed an order forcing over 120,000 Japanese Americans on the West Coast to leave their homes and live in government internment camps. Most of them were American citizens who had not done anything wrong, but the government treated them as a security threat anyway. It is now seen as one of the worst violations of civil rights in U.S. history.</div>
           </div>
         </div></div>
 
@@ -606,7 +604,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Battle of the Coral Sea</div>
-            <div class="event-desc">First naval battle fought entirely with aircraft carriers; Japan's advance toward Australia is stopped.</div>
+            <div class="event-desc">The Battle of the Coral Sea was unique because neither side's ships ever actually saw each other — all the fighting was done by planes launched from aircraft carriers. American forces managed to stop Japan from moving south toward Australia. Both sides took losses, but it was an early sign that Japan's expansion in the Pacific could be stopped.</div>
           </div>
         </div></div>
 
@@ -617,7 +615,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Allies Surrender in the Philippines</div>
-            <div class="event-desc">U.S. and Filipino forces surrender to Japan at Corregidor after months of fighting.</div>
+            <div class="event-desc">American and Filipino troops had been fighting in the Philippines for months but eventually ran out of supplies and had no chance of getting help, so they surrendered to Japan at Corregidor Island. It was the biggest surrender of American-led forces ever. The captured soldiers were then forced on the Bataan Death March, a brutal trek where thousands died from starvation, heat, and abuse.</div>
           </div>
         </div></div>
 
@@ -628,7 +626,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Battle of Midway</div>
-            <div class="event-desc">U.S. Navy defeats Japan and destroys four aircraft carriers, turning the tide in the Pacific.</div>
+            <div class="event-desc">The U.S. had cracked Japan's secret naval codes, so they knew the attack on Midway was coming and were ready for it. American planes struck first and sank four Japanese aircraft carriers in just one battle, which was a massive blow to Japan's navy. Midway is considered the turning point of the Pacific War because after this, Japan was no longer winning.</div>
           </div>
         </div></div>
 
@@ -639,7 +637,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Japan Abandons Guadalcanal</div>
-            <div class="event-desc">Japan withdraws from Guadalcanal after months of fighting, shifting momentum to the Allies in the Pacific.</div>
+            <div class="event-desc">The fighting around Guadalcanal went on for six months and involved battles on land, at sea, and in the air. Japan eventually decided it was too costly to hold the island and secretly pulled out its remaining troops at night. It was the first time the Allies had pushed Japan off territory it held, which was a big confidence boost going forward.</div>
           </div>
         </div></div>
 
@@ -650,7 +648,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Manhattan Project</div>
-            <div class="event-desc">Secret U.S. program to develop the atomic bomb, ultimately changing modern warfare.</div>
+            <div class="event-desc">The Manhattan Project was a massive secret U.S. program with one goal: create an atomic bomb before anyone else did. Thousands of scientists worked at hidden locations around the country, including a site in Los Alamos, New Mexico. They successfully tested the first nuclear bomb in July 1945, and it would soon be used to end the war with Japan.</div>
           </div>
         </div></div>
 
@@ -661,7 +659,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Battle of Leyte Gulf</div>
-            <div class="event-desc">The largest naval battle in history; Allied forces defeat the Japanese navy in the Philippines.</div>
+            <div class="event-desc">The Battle of Leyte Gulf took place in the waters around the Philippines and is known as the biggest naval battle in history, with hundreds of ships involved on both sides. Japan threw everything it had left trying to stop the Allies from taking back the Philippines, but it did not work. After this loss, Japan's navy was basically finished as a real fighting force.</div>
           </div>
         </div></div>
 
@@ -672,7 +670,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Iwo Jima Captured</div>
-            <div class="event-desc">U.S. forces capture the island after intense fighting, gaining a strategic base near Japan.</div>
+            <div class="event-desc">U.S. Marines had to fight extremely hard to take the small island of Iwo Jima because Japan had built a huge network of underground tunnels and bunkers across it. Japanese soldiers refused to surrender and fought until almost none were left. Taking the island gave the U.S. an airbase close enough to Japan to support bombing raids on the mainland.</div>
           </div>
         </div></div>
 
@@ -683,7 +681,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Okinawa Captured</div>
-            <div class="event-desc">The U.S. secures Okinawa after a brutal battle, providing a staging ground for a potential invasion of Japan.</div>
+            <div class="event-desc">Okinawa was the biggest and bloodiest land battle of the entire Pacific War, with huge losses on both sides and thousands of Okinawan civilians also killed in the fighting. The island sat only about 340 miles from Japan, making it a key location. The fighting was so brutal that it actually pushed American leaders to look for another way to end the war instead of invading Japan directly.</div>
           </div>
         </div></div>
 
@@ -694,7 +692,7 @@
           </div>
           <div class="event-body">
             <div class="event-title">Hiroshima / Nagasaki Atomic Bombings</div>
-            <div class="event-desc">The U.S. drops atomic bombs on two Japanese cities, leading to Japan's surrender.</div>
+            <div class="event-desc">The U.S. dropped atomic bombs on the Japanese cities of Hiroshima and Nagasaki three days apart, wiping out both cities almost instantly and killing tens of thousands of people. Many more died in the weeks after from radiation sickness. The destruction was so extreme that Japan had no real choice but to surrender shortly after.</div>
           </div>
         </div></div>
 
@@ -705,18 +703,18 @@
           </div>
           <div class="event-body">
             <div class="event-title">Emperor Hirohito Announces Surrender</div>
-            <div class="event-desc">Japan's emperor announces acceptance of Allied terms and the end of the war.</div>
+            <div class="event-desc">Emperor Hirohito went on the radio to tell the Japanese people the war was over, which was a huge deal because most Japanese citizens had never even heard his voice before. He said the atomic bombs were a new kind of weapon too powerful to fight against. His announcement was what officially stopped the fighting across the Pacific.</div>
           </div>
         </div></div>
 
         <div class="event"><div class="event-inner">
           <div class="event-date">Sept 2, 1945</div>
           <div class="event-image-wrap" data-label="No image — add assets/japan-surrender.webp">
-            <img class="event-image" src="assets/japan-surrender.webp" alt="Japan Official Surrender" style="object-position: center 32%"onerror="this.parentElement.classList.add('no-image')">
+            <img class="event-image" src="assets/japan-surrender.webp" alt="Japan Official Surrender" style="object-position: center 32%" onerror="this.parentElement.classList.add('no-image')">
           </div>
           <div class="event-body">
             <div class="event-title">Japan Signs Official Surrender</div>
-            <div class="event-desc">Japan formally signs surrender documents aboard the USS Missouri, officially ending WWII.</div>
+            <div class="event-desc">Japanese officials came aboard the U.S. battleship USS Missouri in Tokyo Bay and signed the official surrender papers, with representatives from all the Allied countries there to witness it. The signing ceremony marked the true end of World War II after six years of fighting around the world. The day is known as V-J Day, which stands for Victory over Japan.</div>
           </div>
         </div></div>
 
